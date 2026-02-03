@@ -16,16 +16,6 @@ const CustomCursor = dynamic(
   { ssr: false }
 );
 
-const ParticleBackground = dynamic(
-  () => import('@/components/ui/ParticleBackground').then((mod) => mod.ParticleBackground),
-  { ssr: false }
-);
-
-const FullscreenParticleK = dynamic(
-  () => import('@/components/three/FullscreenParticleK').then((mod) => mod.FullscreenParticleK),
-  { ssr: false }
-);
-
 export default function Home() {
   useSmoothScroll();
 
@@ -41,11 +31,9 @@ export default function Home() {
   return (
     <>
       <CustomCursor />
-      <ParticleBackground />
-      <FullscreenParticleK />
       <Navigation />
 
-      <main className="relative z-10 noise-bg">
+      <main className="relative z-10">
         <Hero />
         <Services />
         <Process />

@@ -148,7 +148,7 @@ export const Services = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative"
           >
-            <div className="glass rounded-2xl md:rounded-3xl p-6 md:p-8 border border-white/10 h-full">
+            <div className="glass rounded-2xl md:rounded-3xl p-6 md:p-8 border border-white/10 h-full flex flex-col">
               {/* Strategy Header */}
               <div className="flex items-start gap-4 mb-6">
                 <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br from-cyan-500/20 to-purple-600/20 flex items-center justify-center flex-shrink-0">
@@ -256,12 +256,22 @@ export const Services = () => {
                 </p>
               </div>
 
+              {/* Pricing Range */}
+              <div className="glass rounded-xl p-4 mb-6 border border-cyan-500/20">
+                <h4 className="text-sm font-semibold text-cyan-400 mb-2">
+                  Package Pricing
+                </h4>
+                <p className="text-xs md:text-sm text-gray-400">
+                  Starting from <span className="text-cyan-400 font-medium">$5,000</span> with packages designed to fit different campaign scales and budget requirements. Custom plans also available on request for larger campaigns.
+                </p>
+              </div>
+
               {/* See Packages Button */}
               <motion.button
                 onClick={togglePackages}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full py-3 md:py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all flex items-center justify-center gap-2"
+                className="w-full py-3 md:py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all flex items-center justify-center gap-2 mt-auto"
               >
                 {showTraditionalPackages ? 'Hide Packages' : 'See Packages'}
                 <motion.svg
@@ -287,7 +297,7 @@ export const Services = () => {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="relative"
           >
-            <div className="glass rounded-2xl md:rounded-3xl p-6 md:p-8 border border-white/10 h-full">
+            <div className="glass rounded-2xl md:rounded-3xl p-6 md:p-8 border border-white/10 h-full flex flex-col">
               {/* Strategy Header */}
               <div className="flex items-start gap-4 mb-6">
                 <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-600/20 flex items-center justify-center flex-shrink-0">
@@ -375,12 +385,22 @@ export const Services = () => {
                 </p>
               </div>
 
+              {/* Best For */}
+              <div className="glass rounded-xl p-4 mb-6 border border-pink-500/20">
+                <h4 className="text-sm font-semibold text-pink-400 mb-2">
+                  Best For
+                </h4>
+                <p className="text-xs md:text-sm text-gray-400">
+                  Projects seeking <span className="text-pink-400 font-medium">maximum organic reach</span> through competitive KOL participation and performance-based rewards.
+                </p>
+              </div>
+
               {/* Contact Button */}
               <motion.button
                 onClick={() => openBooking('Modern Strategy', 'Custom Pricing')}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full py-3 md:py-4 rounded-xl bg-gradient-to-r from-purple-500 to-pink-600 font-semibold hover:shadow-lg hover:shadow-pink-500/25 transition-all flex items-center justify-center gap-2"
+                className="w-full py-3 md:py-4 rounded-xl bg-gradient-to-r from-purple-500 to-pink-600 font-semibold hover:shadow-lg hover:shadow-pink-500/25 transition-all flex items-center justify-center gap-2 mt-auto"
               >
                 Book a Call
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

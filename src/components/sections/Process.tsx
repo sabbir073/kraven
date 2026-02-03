@@ -10,37 +10,67 @@ const steps = [
     title: 'Submit a Form OR Book an Exploratory Call',
     description:
       'This is to get in contact with you, to understand your project, demand, and targeted audience to plan your campaign.',
-    icon: '📋',
   },
   {
     number: '02',
     title: 'Confirming Your Campaign Details',
     description:
       'This step is to understand what campaign you have chosen and then formulate the further preparations required.',
-    icon: '✅',
   },
   {
     number: '03',
     title: 'Preparing Your Campaign Execution',
     description:
       'This step is for our team to prepare the necessary things required to execute your program. The time taken for preparation is 7 Business Days.',
-    icon: '⚙️',
   },
   {
     number: '04',
     title: 'Executing Your Campaign',
     description:
       'This step executes your program, marking the start of your campaign & growth.',
-    icon: '🚀',
   },
   {
     number: '05',
     title: 'Giving Result Sheet',
     description:
       'This step is done after the completion of your campaign to give you the analysis of what you have achieved. It takes 7 Business Days to prepare your Result Sheet.',
-    icon: '📊',
   },
 ];
+
+// Glossy number component
+const GlossyNumber = ({ number, isActive }: { number: string; isActive: boolean }) => (
+  <div className="relative">
+    <span
+      className={`text-4xl sm:text-5xl md:text-6xl font-black transition-all duration-500 ${
+        isActive ? 'text-white' : 'text-gray-600'
+      }`}
+      style={{
+        textShadow: isActive
+          ? '0 0 30px rgba(139, 92, 246, 0.8), 0 0 60px rgba(6, 182, 212, 0.5), 0 2px 4px rgba(0,0,0,0.8)'
+          : '0 2px 4px rgba(0,0,0,0.5)',
+        backgroundImage: isActive
+          ? 'linear-gradient(180deg, #fff 0%, #a78bfa 50%, #8b5cf6 100%)'
+          : 'linear-gradient(180deg, #6b7280 0%, #4b5563 50%, #374151 100%)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        backgroundClip: 'text',
+      }}
+    >
+      {number}
+    </span>
+    {/* Glossy shine effect */}
+    {isActive && (
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: 'linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 50%)',
+          WebkitBackgroundClip: 'text',
+          backgroundClip: 'text',
+        }}
+      />
+    )}
+  </div>
+);
 
 export const Process = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -167,16 +197,16 @@ export const Process = () => {
             className="absolute left-1/2 -translate-x-1/2 pointer-events-none hidden md:block"
             style={{
               y: smoothTorchY,
-              width: '800px',
-              height: '400px',
-              marginTop: '-200px',
+              width: '900px',
+              height: '500px',
+              marginTop: '-250px',
             }}
           >
             <div
               className="w-full h-full"
               style={{
-                background: 'radial-gradient(ellipse at center, rgba(139, 92, 246, 0.15) 0%, rgba(6, 182, 212, 0.1) 30%, transparent 70%)',
-                filter: 'blur(60px)',
+                background: 'radial-gradient(ellipse at center, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.12) 30%, transparent 65%)',
+                filter: 'blur(50px)',
               }}
             />
           </motion.div>
@@ -186,17 +216,17 @@ export const Process = () => {
             className="absolute left-4 sm:left-8 pointer-events-none md:hidden"
             style={{
               y: smoothTorchY,
-              width: '300px',
-              height: '300px',
-              marginTop: '-150px',
+              width: '350px',
+              height: '350px',
+              marginTop: '-175px',
               marginLeft: '-100px',
             }}
           >
             <div
               className="w-full h-full"
               style={{
-                background: 'radial-gradient(ellipse at center, rgba(139, 92, 246, 0.2) 0%, rgba(6, 182, 212, 0.1) 40%, transparent 70%)',
-                filter: 'blur(40px)',
+                background: 'radial-gradient(ellipse at center, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.15) 40%, transparent 70%)',
+                filter: 'blur(35px)',
               }}
             />
           </motion.div>
@@ -244,22 +274,7 @@ export const Process = () => {
                     }`}
                   >
                     <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                      <motion.span
-                        animate={{
-                          scale: activeStep === i ? 1.1 : 1,
-                        }}
-                        transition={{ duration: 0.3 }}
-                        className="text-2xl sm:text-3xl md:text-4xl"
-                      >
-                        {step.icon}
-                      </motion.span>
-                      <span
-                        className={`text-xs sm:text-sm font-mono transition-colors duration-300 ${
-                          activeStep === i ? 'text-cyan-400' : 'text-purple-400/60'
-                        }`}
-                      >
-                        {step.number}
-                      </span>
+                      <GlossyNumber number={step.number} isActive={activeStep === i} />
                     </div>
                     <h3
                       className={`text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3 transition-colors duration-300 ${
@@ -314,17 +329,48 @@ export const Process = () => {
         </div>
 
         {/* CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-          className="text-center mt-16 md:mt-24 pt-12 md:pt-16 border-t border-white/10"
-        >
-          <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
-            Ready to Take Your Project to the{' '}
-            <span className="gradient-text">Next Level?</span>
-          </h3>
+        <div className="relative mt-16 md:mt-24 pt-12 md:pt-16 border-t border-white/10">
+          {/* Torch Light Effect - Cone spreading from top */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[350px] pointer-events-none overflow-hidden">
+            {/* SVG Cone Shape for precise torch effect */}
+            <svg
+              className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[320px]"
+              viewBox="0 0 1200 320"
+              preserveAspectRatio="none"
+            >
+              <defs>
+                <linearGradient id="torchGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="rgba(255,255,255,0.55)" />
+                  <stop offset="10%" stopColor="rgba(255,255,255,0.4)" />
+                  <stop offset="30%" stopColor="rgba(255,255,255,0.25)" />
+                  <stop offset="50%" stopColor="rgba(255,255,255,0.12)" />
+                  <stop offset="75%" stopColor="rgba(255,255,255,0.04)" />
+                  <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+                </linearGradient>
+                <filter id="torchBlur" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="25" />
+                </filter>
+              </defs>
+              {/* Main cone shape - wider top, even wider spread at bottom */}
+              <path
+                d="M 500 0 L 700 0 L 1100 320 L 100 320 Z"
+                fill="url(#torchGradient)"
+                filter="url(#torchBlur)"
+              />
+            </svg>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
+            className="text-center relative z-10"
+          >
+            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
+              Ready to Take Your Project to the{' '}
+              <span className="gradient-text">Next Level?</span>
+            </h3>
           <p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-xl mx-auto mb-8">
             Let&apos;s discuss how we can help accelerate your project&apos;s growth with our proven marketing strategies.
           </p>
@@ -365,7 +411,8 @@ export const Process = () => {
               </span>
             </motion.a>
           </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
 
       {/* Booking Popup */}

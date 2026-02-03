@@ -2,42 +2,27 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
 import Image from 'next/image';
-import { BookingPopup } from './BookingPopup';
+import Link from 'next/link';
 
 const navItems = [
-  { name: 'Home', href: '#home' },
-  { name: 'Our Services', href: '#services' },
-  { name: 'Our Process', href: '#process' },
-  { name: 'About', href: '#about' },
-  { name: 'FAQ', href: '#faq' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Home', href: '#home', isExternal: false },
+  { name: 'Our Services', href: '#services', isExternal: false },
+  { name: 'Our Process', href: '#process', isExternal: false },
+  { name: 'About', href: '#about', isExternal: false },
+  { name: 'FAQ', href: '#faq', isExternal: false },
+  { name: 'Contact', href: '#contact', isExternal: false },
+  { name: 'Leaderboard', href: '/leaderboard', isExternal: true },
 ];
 
+const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeiNqdTclHLO5xtMli4lr1-yIE73lbOSAXyMdcgPneYejSaUg/viewform';
+
 export const Navigation = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const [bookingPopup, setBookingPopup] = useState({
-    isOpen: false,
-    packageName: 'General Inquiry',
-    packagePrice: 'Custom Quote',
-  });
-
-  const openBooking = () => {
-    setIsMobileMenuOpen(false);
-    setBookingPopup({ ...bookingPopup, isOpen: true });
-  };
-
-  const closeBooking = () => {
-    setBookingPopup({ ...bookingPopup, isOpen: false });
-  };
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-
       // Determine active section
       const sections = navItems.map((item) => item.href.replace('#', ''));
       for (const section of sections.reverse()) {
@@ -70,32 +55,48 @@ export const Navigation = () => {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled ? 'glass py-4' : 'py-6'
-        }`}
+        className="absolute top-0 left-0 right-0 z-50 py-6"
       >
         <div className="container-custom">
           <div className="flex items-center justify-between">
-            {/* Logo */}
-            <Link href="#home" className="hoverable">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Image
-                  src="/logo/kraven png white.png"
-                  alt="Kraven"
-                  width={200}
-                  height={60}
-                  className="h-8 sm:h-10 md:h-12 lg:h-14 w-auto"
-                  priority
-                />
-              </motion.div>
-            </Link>
+            {/* Logo + Navigation - Left aligned */}
+            <div className="flex items-center gap-10">
+              {/* Logo */}
+              <Link href="/" className="flex-shrink-0 hoverable">
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Image
+                    src="/logo/kraven png white.png"
+                    alt="Kraven"
+                    width={120}
+                    height={36}
+                    className="h-7 w-auto"
+                    priority
+                  />
+                </motion.div>
+              </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-8">
+              {/* Desktop Navigation - After Logo */}
+              <div className="hidden lg:flex items-center gap-8">
               {navItems.map((item, index) => (
+                item.isExternal ? (
+                  <motion.div
+                    key={item.name}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <Link
+                      href={item.href}
+                      className="relative text-sm font-medium transition-colors hoverable text-gray-400 hover:text-white"
+                    >
+                      {item.name}
+                    </Link>
+                  </motion.div>
+                ) : (
                 <motion.button
                   key={item.name}
                   onClick={() => handleNavClick(item.href)}
@@ -117,25 +118,23 @@ export const Navigation = () => {
                     />
                   )}
                 </motion.button>
+                )
               ))}
+              </div>
             </div>
 
-            {/* CTA Button */}
-            <motion.button
+            {/* CTA Button - Links to Google Form */}
+            <motion.a
+              href={GOOGLE_FORM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.5 }}
-              onClick={openBooking}
-              className="hidden lg:flex items-center gap-2 btn-primary text-sm hoverable"
+              className="hidden lg:flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium text-white bg-[#0a0a12] border border-purple-500/50 hover:border-purple-400 hover:bg-purple-500/10 transition-all hoverable"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                <line x1="16" y1="2" x2="16" y2="6" />
-                <line x1="8" y1="2" x2="8" y2="6" />
-                <line x1="3" y1="10" x2="21" y2="10" />
-              </svg>
-              Book a Call
-            </motion.button>
+              Submit a Form For KOLs
+            </motion.a>
 
             {/* Mobile Menu Button */}
             <motion.button
@@ -197,49 +196,54 @@ export const Navigation = () => {
             >
               <div className="flex flex-col gap-4 sm:gap-6">
                 {navItems.map((item, index) => (
-                  <motion.button
-                    key={item.name}
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    onClick={() => handleNavClick(item.href)}
-                    className={`text-xl sm:text-2xl font-medium text-left hoverable ${
-                      activeSection === item.href.replace('#', '')
-                        ? 'gradient-text'
-                        : 'text-gray-300'
-                    }`}
-                  >
-                    {item.name}
-                  </motion.button>
+                  item.isExternal ? (
+                    <motion.div
+                      key={item.name}
+                      initial={{ opacity: 0, x: 50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <Link
+                        href={item.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="text-xl sm:text-2xl font-medium text-left hoverable text-gray-300"
+                      >
+                        {item.name}
+                      </Link>
+                    </motion.div>
+                  ) : (
+                    <motion.button
+                      key={item.name}
+                      initial={{ opacity: 0, x: 50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      onClick={() => handleNavClick(item.href)}
+                      className={`text-xl sm:text-2xl font-medium text-left hoverable ${
+                        activeSection === item.href.replace('#', '')
+                          ? 'gradient-text'
+                          : 'text-gray-300'
+                      }`}
+                    >
+                      {item.name}
+                    </motion.button>
+                  )
                 ))}
-                <motion.button
+                <motion.a
+                  href={GOOGLE_FORM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6 }}
-                  onClick={openBooking}
-                  className="btn-primary text-center mt-4 hoverable text-sm sm:text-base flex items-center justify-center gap-2"
+                  className="btn-primary text-center mt-4 hoverable text-sm sm:text-base"
                 >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                    <line x1="16" y1="2" x2="16" y2="6" />
-                    <line x1="8" y1="2" x2="8" y2="6" />
-                    <line x1="3" y1="10" x2="21" y2="10" />
-                  </svg>
-                  Book a Call
-                </motion.button>
+                  Submit a Form For KOLs
+                </motion.a>
               </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Booking Popup */}
-      <BookingPopup
-        isOpen={bookingPopup.isOpen}
-        onClose={closeBooking}
-        packageName={bookingPopup.packageName}
-        packagePrice={bookingPopup.packagePrice}
-      />
     </>
   );
 };

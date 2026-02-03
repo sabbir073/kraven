@@ -87,7 +87,7 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="section-padding relative overflow-hidden">
+    <section id="contact" className="section-padding !pb-4 md:!pb-6 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 grid-bg opacity-20" />
       <div

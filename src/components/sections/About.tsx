@@ -6,27 +6,27 @@ import Image from 'next/image';
 
 const kravenFeatures = [
   {
-    icon: '📊',
+    icon: '✦',
     title: 'Data-Driven Audience Targeting',
     description: 'Precision targeting based on analytics and user behavior data.',
   },
   {
-    icon: '🚀',
+    icon: '✦',
     title: 'Quality with Mass Scaling',
     description: 'Premium quality marketing that scales to reach millions.',
   },
   {
-    icon: '💰',
+    icon: '✦',
     title: 'Limited Budget, Wider Reach',
     description: 'Maximize your reach with our Traditional Strategy packages.',
   },
   {
-    icon: '🔗',
+    icon: '✦',
     title: 'On-Chain Behavior Tracking',
     description: 'Track real user engagement and on-chain activity.',
   },
   {
-    icon: '📦',
+    icon: '✦',
     title: 'Estimated Built-in Packages',
     description: 'Pre-designed packages for high accuracy and predictable results.',
   },
@@ -164,7 +164,7 @@ export const About = () => {
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center">
-                  <span className="text-xl">🤝</span>
+                  <span className="text-xl text-purple-400">✦</span>
                 </div>
                 <h4 className="text-lg font-semibold text-purple-400">Fair Terms for Everyone</h4>
               </div>
@@ -207,7 +207,7 @@ export const About = () => {
                     className="flex items-start gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
                   >
                     <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-cyan-500/20 to-purple-500/20 flex items-center justify-center flex-shrink-0">
-                      <span className="text-lg">{feature.icon}</span>
+                      <span className="text-lg text-cyan-400">{feature.icon}</span>
                     </div>
                     <div>
                       <h4 className="font-semibold text-sm sm:text-base mb-0.5">{feature.title}</h4>
