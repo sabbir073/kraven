@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 
-const createTransporter = () => {
+const getTransporter = () => {
   const port = parseInt(process.env.SMTP_PORT || '465');
   const secure = process.env.SMTP_SECURE === 'true' || port === 465;
 
@@ -17,8 +17,6 @@ const createTransporter = () => {
     },
   });
 };
-
-const transporter = createTransporter();
 
 export interface ContactFormData {
   name: string;
@@ -148,6 +146,7 @@ ${data.message}
 This email was sent from the Kraven website contact form.
   `;
 
+  const transporter = getTransporter();
   await transporter.sendMail({
     from: `"${process.env.SMTP_FROM_NAME}" <${process.env.SMTP_FROM_EMAIL}>`,
     to: process.env.CONTACT_EMAIL,
@@ -327,6 +326,7 @@ ${data.projectDescription}
 This booking request was submitted via the Kraven website.
   `;
 
+  const transporter = getTransporter();
   await transporter.sendMail({
     from: `"${process.env.SMTP_FROM_NAME}" <${process.env.SMTP_FROM_EMAIL}>`,
     to: process.env.CONTACT_EMAIL,
