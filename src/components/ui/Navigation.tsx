@@ -69,11 +69,11 @@ export const Navigation = () => {
                   transition={{ duration: 0.5 }}
                 >
                   <Image
-                    src="/logo/kraven png white.png"
+                    src="/logo/circle-cropped.png"
                     alt="Kraven"
-                    width={120}
-                    height={36}
-                    className="h-7 w-auto"
+                    width={40}
+                    height={40}
+                    className="h-9 w-9"
                     priority
                   />
                 </motion.div>
