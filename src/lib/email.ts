@@ -3,19 +3,30 @@ import nodemailer from 'nodemailer';
 const getTransporter = () => {
   const port = parseInt(process.env.SMTP_PORT || '465');
   const secure = process.env.SMTP_SECURE === 'true' || port === 465;
+  const password = process.env.SMTP_PASSWORD?.replace(/^"|"$/g, '') || '';
+
+  console.log('SMTP Config:', {
+    host: process.env.SMTP_HOST,
+    port,
+    secure,
+    user: process.env.SMTP_USER,
+    passLength: password.length,
+  });
 
   return nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port,
     secure,
     auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASSWORD,
+      type: 'login',
+      user: process.env.SMTP_USER || '',
+      pass: password,
     },
     tls: {
       rejectUnauthorized: false,
     },
-  });
+    authMethod: 'LOGIN',
+  } as any);
 };
 
 export interface ContactFormData {

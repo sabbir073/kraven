@@ -8,6 +8,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://kraven.live'),
   title: 'KRAVEN - The First Ever CreatorFi Platform',
   description:
     'Kraven is the pioneering CreatorFi protocol that enables creators to tokenize their influence and build sustainable creator economies with blockchain technology.',
@@ -21,8 +22,8 @@ export const metadata: Metadata = {
     'DeFi',
   ],
   icons: {
-    icon: '/favicon.png',
-    apple: '/favicon.png',
+    icon: '/logo/circle-cropped.png',
+    apple: '/logo/circle-cropped.png',
   },
   openGraph: {
     title: 'KRAVEN - The First Ever CreatorFi Platform',

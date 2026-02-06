@@ -192,11 +192,11 @@ export default function Leaderboard() {
         <div className="container-custom">
           <div className="flex flex-col items-center justify-center gap-3 sm:gap-4 md:flex-row md:justify-between">
             <Image
-              src="/logo/circle-cropped.png"
+              src="/logo/kraven png white.png"
               alt="Kraven"
-              width={40}
+              width={120}
               height={40}
-              className="h-8 w-8 sm:h-10 sm:w-10"
+              className="h-8 w-auto sm:h-10"
             />
             <div className="text-xs text-gray-500 text-center">
               © 2025 Kraven. All rights reserved.
