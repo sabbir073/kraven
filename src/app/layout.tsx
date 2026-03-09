@@ -22,8 +22,8 @@ export const metadata: Metadata = {
     'DeFi',
   ],
   icons: {
-    icon: '/KRAVEN-LOGO-2.png',
-    apple: '/KRAVEN-LOGO-2.png',
+    icon: '/KRAVEN-BLACK.png',
+    apple: '/KRAVEN-BLACK.png',
   },
   openGraph: {
     title: 'KRAVEN - The First Ever CreatorFi Platform',

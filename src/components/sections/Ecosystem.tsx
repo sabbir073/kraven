@@ -77,9 +77,11 @@ const AnimatedCounter = ({ end, suffix = '', decimals = 0 }: { end: number; suff
 };
 
 const useResponsiveSize = () => {
+  const [mounted, setMounted] = useState(false);
   const [size, setSize] = useState({ outerRadius: 280, innerRadius: 170, logoSize: 56, container: 640 });
 
   useEffect(() => {
+    setMounted(true);
     const update = () => {
       const w = window.innerWidth;
       if (w < 400) {
@@ -97,12 +99,12 @@ const useResponsiveSize = () => {
     return () => window.removeEventListener('resize', update);
   }, []);
 
-  return size;
+  return { ...size, mounted };
 };
 
 export const Ecosystem = () => {
   const [selectedKOL, setSelectedKOL] = useState<KOLMember | null>(null);
-  const { outerRadius, innerRadius, logoSize, container } = useResponsiveSize();
+  const { outerRadius, innerRadius, logoSize, container, mounted } = useResponsiveSize();
 
   const getCirclePosition = (index: number, total: number, radius: number) => {
     const angle = (index / total) * 2 * Math.PI - Math.PI / 2;
@@ -135,6 +137,7 @@ export const Ecosystem = () => {
       </motion.div>
 
       {/* Orbit Container */}
+      {mounted ? (
       <div className="relative mx-auto" style={{ width: container, height: container, maxWidth: '100vw' }}>
         <div className="absolute inset-0 flex items-center justify-center">
           {/* Outer ring track */}
@@ -312,6 +315,9 @@ export const Ecosystem = () => {
           </motion.div>
         </div>
       </div>
+      ) : (
+        <div className="relative mx-auto" style={{ width: 640, height: 640, maxWidth: '100vw' }} />
+      )}
 
       {/* Statement Text */}
       <motion.div
