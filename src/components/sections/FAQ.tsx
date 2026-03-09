@@ -52,17 +52,17 @@ const FAQItem = ({
     >
       <motion.button
         onClick={onToggle}
-        className="w-full p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl glass glass-hover text-left flex items-center justify-between gap-3 sm:gap-4 hoverable"
+        className="w-full p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl glass glass-hover text-left flex items-center justify-between gap-3 sm:gap-4 hoverable border border-white/10 hover:border-blue-500/30"
         whileHover={{ scale: 1.01 }}
       >
         <span className="font-semibold text-sm sm:text-base md:text-lg pr-2 sm:pr-4">{faq.question}</span>
         <motion.div
           animate={{ rotate: isOpen ? 45 : 0 }}
           transition={{ duration: 0.3 }}
-          className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-r from-purple-500/20 to-cyan-500/20 flex items-center justify-center"
+          className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-r from-blue-500/20 to-blue-400/20 flex items-center justify-center"
         >
           <svg
-            className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400"
+            className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -109,7 +109,7 @@ export const FAQ = () => {
       <div
         className="absolute bottom-0 right-0 w-[500px] h-[500px]"
         style={{
-          background: 'radial-gradient(circle, rgba(244, 114, 182, 0.1) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(60, 80, 255, 0.08) 0%, transparent 70%)',
           filter: 'blur(100px)',
         }}
       />
@@ -123,21 +123,11 @@ export const FAQ = () => {
             transition={{ duration: 0.8 }}
             className="lg:sticky lg:top-32 lg:self-start text-center lg:text-left"
           >
-            <motion.span
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ delay: 0.2 }}
-              className="inline-block px-3 py-1.5 sm:px-4 sm:py-2 rounded-full glass text-xs sm:text-sm text-purple-400 mb-4 sm:mb-6"
-            >
+            <span className="gsap-badge inline-block px-6 py-2 border border-white/20 rounded-full text-sm text-gray-400 tracking-widest uppercase">
               FAQ
-            </motion.span>
-
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
-              Frequently Asked <span className="gradient-text">Questions</span>
-            </h2>
-
-            <p className="text-gray-400 text-sm sm:text-base md:text-lg mb-6 sm:mb-8">
-              Learn more about our campaign strategies, KOL tier system, and how we deliver real results for Web3 projects.
+            </span>
+            <p className="ecosystem-subtitle text-white/70 text-xl md:text-2xl font-bold mt-3 leading-tight tracking-wide mb-6 sm:mb-8">
+              Frequently Asked Questions
             </p>
 
             <motion.div
@@ -157,7 +147,7 @@ export const FAQ = () => {
                     contactSection.scrollIntoView({ behavior: 'smooth' });
                   }
                 }}
-                className="btn-outline text-xs sm:text-sm hoverable"
+                className="hoverable px-5 py-2.5 sm:px-6 sm:py-3 rounded-full border text-sm font-medium transition-all duration-300 backdrop-blur-md border-white/30 bg-gradient-to-b from-white/15 to-white/5 text-white shadow-[0_0_20px_rgba(255,255,255,0.08),inset_0_1px_0_rgba(255,255,255,0.15),0_6px_20px_-4px_rgba(255,255,255,0.15)]"
               >
                 Contact Us
               </motion.button>

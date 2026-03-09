@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     // Validate required fields
-    const { name, email, message } = body as ContactFormData;
+    const { name, email, projectName, projectLink, category, message } = body as ContactFormData;
 
     if (!name || !email || !message) {
       return NextResponse.json(
@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Send email
-    await sendContactEmail({ name, email, message });
+    await sendContactEmail({ name, email, projectName, projectLink, category, message });
 
     return NextResponse.json(
       { success: true, message: 'Message sent successfully' },

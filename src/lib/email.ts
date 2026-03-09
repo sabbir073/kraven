@@ -32,6 +32,9 @@ const getTransporter = () => {
 export interface ContactFormData {
   name: string;
   email: string;
+  projectName: string;
+  projectLink: string;
+  category: string;
   message: string;
 }
 
@@ -85,7 +88,7 @@ export async function sendContactEmail(data: ContactFormData) {
                     </h2>
                     <table role="presentation" style="width: 100%; border-collapse: collapse;">
                       <tr>
-                        <td style="padding: 8px 0; color: #a1a1aa; font-size: 14px; width: 100px;">Name:</td>
+                        <td style="padding: 8px 0; color: #a1a1aa; font-size: 14px; width: 120px;">Name:</td>
                         <td style="padding: 8px 0; color: #ffffff; font-size: 14px; font-weight: 500;">${data.name}</td>
                       </tr>
                       <tr>
@@ -93,6 +96,20 @@ export async function sendContactEmail(data: ContactFormData) {
                         <td style="padding: 8px 0;">
                           <a href="mailto:${data.email}" style="color: #06b6d4; font-size: 14px; text-decoration: none;">${data.email}</a>
                         </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 0; color: #a1a1aa; font-size: 14px;">Project Name:</td>
+                        <td style="padding: 8px 0; color: #ffffff; font-size: 14px; font-weight: 500;">${data.projectName || 'N/A'}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 0; color: #a1a1aa; font-size: 14px;">Project Link:</td>
+                        <td style="padding: 8px 0;">
+                          ${data.projectLink ? `<a href="${data.projectLink}" style="color: #06b6d4; font-size: 14px; text-decoration: none;">${data.projectLink}</a>` : '<span style="color: #71717a; font-size: 14px;">N/A</span>'}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 0; color: #a1a1aa; font-size: 14px;">Category:</td>
+                        <td style="padding: 8px 0; color: #ffffff; font-size: 14px; font-weight: 500;">${data.category || 'N/A'}</td>
                       </tr>
                     </table>
                   </td>
@@ -149,6 +166,9 @@ New Contact Form Submission
 Sender Information:
 - Name: ${data.name}
 - Email: ${data.email}
+- Project Name: ${data.projectName || 'N/A'}
+- Project Link: ${data.projectLink || 'N/A'}
+- Category: ${data.category || 'N/A'}
 
 Message:
 ${data.message}

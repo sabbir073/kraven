@@ -1,29 +1,31 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import gsap from 'gsap';
 
 const navItems = [
   { name: 'Home', href: '#home', isExternal: false },
-  { name: 'Our Services', href: '#services', isExternal: false },
-  { name: 'Our Process', href: '#process', isExternal: false },
+  { name: 'Campaigns', href: '#campaigns', isExternal: false },
+  { name: 'Services', href: '#services', isExternal: false },
+  { name: 'Process', href: '#process', isExternal: false },
   { name: 'About', href: '#about', isExternal: false },
   { name: 'FAQ', href: '#faq', isExternal: false },
   { name: 'Contact', href: '#contact', isExternal: false },
-  { name: 'Leaderboard', href: '/leaderboard', isExternal: true },
 ];
-
-const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeiNqdTclHLO5xtMli4lr1-yIE73lbOSAXyMdcgPneYejSaUg/viewform';
 
 export const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const navRef = useRef<HTMLElement>(null);
+  const logoRef = useRef<HTMLDivElement>(null);
+  const navItemsRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLAnchorElement & HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      // Determine active section
       const sections = navItems.map((item) => item.href.replace('#', ''));
       for (const section of sections.reverse()) {
         const element = document.getElementById(section);
@@ -41,6 +43,49 @@ export const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // GSAP entrance animations
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+      // Nav bar drops down
+      tl.fromTo(
+        navRef.current,
+        { y: -100, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8 }
+      );
+
+      // Logo slides in from left
+      tl.fromTo(
+        logoRef.current,
+        { x: -30, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.5 },
+        '-=0.4'
+      );
+
+      // Nav items stagger in
+      if (navItemsRef.current) {
+        const items = navItemsRef.current.children;
+        tl.fromTo(
+          items,
+          { y: -20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.4, stagger: 0.08 },
+          '-=0.3'
+        );
+      }
+
+      // CTA button pops in
+      tl.fromTo(
+        ctaRef.current,
+        { x: 30, opacity: 0, scale: 0.9 },
+        { x: 0, opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.7)' },
+        '-=0.2'
+      );
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   const handleNavClick = (href: string) => {
     setIsMobileMenuOpen(false);
     const element = document.querySelector(href);
@@ -51,11 +96,10 @@ export const Navigation = () => {
 
   return (
     <>
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      <nav
+        ref={navRef}
         className="absolute top-0 left-0 right-0 z-50 py-6"
+        style={{ opacity: 0 }}
       >
         <div className="container-custom">
           <div className="flex items-center justify-between">
@@ -63,46 +107,35 @@ export const Navigation = () => {
             <div className="flex items-center gap-10">
               {/* Logo */}
               <Link href="/" className="flex-shrink-0 hoverable">
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
+                <div ref={logoRef} style={{ opacity: 0 }}>
                   <Image
-                    src="/logo/kraven png white.png"
+                    src="/KRAVEN-WHITE.png"
                     alt="Kraven"
                     width={120}
                     height={40}
                     className="h-8 w-auto"
                     priority
                   />
-                </motion.div>
+                </div>
               </Link>
 
               {/* Desktop Navigation - After Logo */}
-              <div className="hidden lg:flex items-center gap-8">
-              {navItems.map((item, index) => (
+              <div ref={navItemsRef} className="hidden lg:flex items-center gap-8">
+              {navItems.map((item) => (
                 item.isExternal ? (
-                  <motion.div
-                    key={item.name}
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                  >
+                  <div key={item.name} style={{ opacity: 0 }}>
                     <Link
                       href={item.href}
                       className="relative text-sm font-medium transition-colors hoverable text-gray-400 hover:text-white"
                     >
                       {item.name}
                     </Link>
-                  </motion.div>
+                  </div>
                 ) : (
-                <motion.button
+                <button
                   key={item.name}
                   onClick={() => handleNavClick(item.href)}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
+                  style={{ opacity: 0 }}
                   className={`relative text-sm font-medium transition-colors hoverable ${
                     activeSection === item.href.replace('#', '')
                       ? 'text-white'
@@ -113,28 +146,25 @@ export const Navigation = () => {
                   {activeSection === item.href.replace('#', '') && (
                     <motion.div
                       layoutId="activeNav"
-                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-500 to-cyan-500"
+                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-blue-400"
                       transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
                     />
                   )}
-                </motion.button>
+                </button>
                 )
               ))}
               </div>
             </div>
 
-            {/* CTA Button - Links to Google Form */}
-            <motion.a
-              href={GOOGLE_FORM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5 }}
-              className="hidden lg:flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium text-white bg-[#0a0a12] border border-purple-500/50 hover:border-purple-400 hover:bg-purple-500/10 transition-all hoverable"
+            {/* Login / Signup Button */}
+            <Link
+              ref={ctaRef}
+              href="/login"
+              style={{ opacity: 0 }}
+              className="hidden lg:flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium text-white bg-[#0a0a12] border border-blue-500/50 hover:border-blue-400 hover:bg-blue-500/10 transition-all hoverable"
             >
-              Submit a Form For KOLs
-            </motion.a>
+              Login / Signup
+            </Link>
 
             {/* Mobile Menu Button */}
             <motion.button
@@ -169,7 +199,7 @@ export const Navigation = () => {
             </motion.button>
           </div>
         </div>
-      </motion.nav>
+      </nav>
 
       {/* Mobile Menu */}
       <AnimatePresence>
@@ -228,17 +258,19 @@ export const Navigation = () => {
                     </motion.button>
                   )
                 ))}
-                <motion.a
-                  href={GOOGLE_FORM_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6 }}
-                  className="btn-primary text-center mt-4 hoverable text-sm sm:text-base"
                 >
-                  Submit a Form For KOLs
-                </motion.a>
+                  <Link
+                    href="/login"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block text-center mt-4 px-5 py-2.5 rounded-full text-sm sm:text-base font-medium text-white border border-blue-500/50 hover:border-blue-400 hover:bg-blue-500/10 transition-all hoverable"
+                  >
+                    Login / Signup
+                  </Link>
+                </motion.div>
               </div>
             </motion.div>
           </motion.div>

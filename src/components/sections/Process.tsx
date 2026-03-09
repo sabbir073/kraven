@@ -2,7 +2,13 @@
 
 import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useInView, useMotionValue, useSpring } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import { BookingPopup } from '../ui/BookingPopup';
+
+const CTAGlow = dynamic(
+  () => import('../ui/CTAGlow').then((mod) => mod.CTAGlow),
+  { ssr: false }
+);
 
 const steps = [
   {
@@ -46,10 +52,10 @@ const GlossyNumber = ({ number, isActive }: { number: string; isActive: boolean 
       }`}
       style={{
         textShadow: isActive
-          ? '0 0 30px rgba(139, 92, 246, 0.8), 0 0 60px rgba(6, 182, 212, 0.5), 0 2px 4px rgba(0,0,0,0.8)'
+          ? '0 0 30px rgba(60, 80, 255, 0.8), 0 0 60px rgba(80, 120, 255, 0.5), 0 2px 4px rgba(0,0,0,0.8)'
           : '0 2px 4px rgba(0,0,0,0.5)',
         backgroundImage: isActive
-          ? 'linear-gradient(180deg, #fff 0%, #a78bfa 50%, #8b5cf6 100%)'
+          ? 'linear-gradient(180deg, #fff 0%, #6090ff 50%, #3c50ff 100%)'
           : 'linear-gradient(180deg, #6b7280 0%, #4b5563 50%, #374151 100%)',
         WebkitBackgroundClip: 'text',
         WebkitTextFillColor: 'transparent',
@@ -169,23 +175,19 @@ export const Process = () => {
       <div className="container-custom relative z-10" ref={ref}>
         {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
           className="text-center mb-10 md:mb-20 px-4"
         >
-          <motion.span
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ delay: 0.2 }}
-            className="inline-block px-3 py-1.5 sm:px-4 sm:py-2 rounded-full glass text-xs sm:text-sm text-cyan-400 mb-4 sm:mb-6"
-          >
+          <span className="gsap-badge inline-block px-6 py-2 border border-white/20 rounded-full text-sm text-gray-400 tracking-widest uppercase">
             Our Process
-          </motion.span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6">
-            Our <span className="gradient-text-alt">5-Step Process</span>
-          </h2>
-          <p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto">
+          </span>
+          <p className="ecosystem-subtitle text-white/70 text-xl md:text-2xl font-bold mt-3 leading-tight tracking-wide">
+            Our 5-Step Process
+          </p>
+          <p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto mt-3">
             From initial contact to campaign completion, we guide you through every step of your marketing journey.
           </p>
         </motion.div>
@@ -205,7 +207,7 @@ export const Process = () => {
             <div
               className="w-full h-full"
               style={{
-                background: 'radial-gradient(ellipse at center, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.12) 30%, transparent 65%)',
+                background: 'radial-gradient(ellipse at center, rgba(60, 80, 255, 0.45) 0%, rgba(80, 100, 255, 0.25) 25%, rgba(100, 120, 255, 0.12) 45%, transparent 65%)',
                 filter: 'blur(50px)',
               }}
             />
@@ -225,16 +227,16 @@ export const Process = () => {
             <div
               className="w-full h-full"
               style={{
-                background: 'radial-gradient(ellipse at center, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.15) 40%, transparent 70%)',
+                background: 'radial-gradient(ellipse at center, rgba(60, 80, 255, 0.5) 0%, rgba(80, 100, 255, 0.3) 30%, rgba(100, 120, 255, 0.15) 50%, transparent 70%)',
                 filter: 'blur(35px)',
               }}
             />
           </motion.div>
 
           {/* Animated line */}
-          <div className="absolute left-4 sm:left-8 md:left-1/2 top-0 bottom-0 w-px bg-gray-800/50 -translate-x-1/2">
+          <div className="absolute left-4 sm:left-8 md:left-1/2 top-0 bottom-0 w-px bg-white/20 -translate-x-1/2">
             <motion.div
-              className="absolute top-0 left-0 w-full bg-gradient-to-b from-purple-500 via-cyan-500 to-pink-500"
+              className="absolute top-0 left-0 w-full bg-white"
               style={{ height: lineHeight }}
             />
           </div>
@@ -269,7 +271,7 @@ export const Process = () => {
                       i % 2 === 0 ? 'md:ml-auto' : ''
                     } ${
                       activeStep === i
-                        ? 'glass border border-purple-500/30 shadow-lg shadow-purple-500/10'
+                        ? 'glass border border-blue-500/30 shadow-lg shadow-blue-500/10'
                         : 'glass border border-white/5'
                     }`}
                   >
@@ -305,18 +307,18 @@ export const Process = () => {
                     animate={{
                       scale: activeStep === i ? 1.5 : 1,
                       boxShadow: activeStep === i
-                        ? '0 0 20px rgba(139, 92, 246, 0.6), 0 0 40px rgba(6, 182, 212, 0.4)'
-                        : '0 0 0px rgba(139, 92, 246, 0)',
+                        ? '0 0 20px rgba(255, 255, 255, 0.6), 0 0 40px rgba(255, 255, 255, 0.3)'
+                        : '0 0 0px rgba(255, 255, 255, 0)',
                     }}
                     transition={{ duration: 0.4 }}
-                    className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500"
+                    className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white"
                   />
                   {activeStep === i && (
                     <motion.div
                       initial={{ scale: 0.8, opacity: 0.8 }}
                       animate={{ scale: 2, opacity: 0 }}
                       transition={{ duration: 1.5, repeat: Infinity }}
-                      className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500"
+                      className="absolute inset-0 rounded-full bg-white"
                     />
                   )}
                 </motion.div>
@@ -329,88 +331,54 @@ export const Process = () => {
         </div>
 
         {/* CTA Section */}
-        <div className="relative mt-16 md:mt-24 pt-12 md:pt-16 border-t border-white/10">
-          {/* Torch Light Effect - Cone spreading from top */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[350px] pointer-events-none overflow-hidden">
-            {/* SVG Cone Shape for precise torch effect */}
-            <svg
-              className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[320px]"
-              viewBox="0 0 1200 320"
-              preserveAspectRatio="none"
-            >
-              <defs>
-                <linearGradient id="torchGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="rgba(255,255,255,0.55)" />
-                  <stop offset="10%" stopColor="rgba(255,255,255,0.4)" />
-                  <stop offset="30%" stopColor="rgba(255,255,255,0.25)" />
-                  <stop offset="50%" stopColor="rgba(255,255,255,0.12)" />
-                  <stop offset="75%" stopColor="rgba(255,255,255,0.04)" />
-                  <stop offset="100%" stopColor="rgba(255,255,255,0)" />
-                </linearGradient>
-                <filter id="torchBlur" x="-50%" y="-50%" width="200%" height="200%">
-                  <feGaussianBlur in="SourceGraphic" stdDeviation="25" />
-                </filter>
-              </defs>
-              {/* Main cone shape - wider top, even wider spread at bottom */}
-              <path
-                d="M 500 0 L 700 0 L 1100 320 L 100 320 Z"
-                fill="url(#torchGradient)"
-                filter="url(#torchBlur)"
-              />
-            </svg>
-          </div>
+        <div className="relative mt-16 md:mt-24 pt-20 md:pt-32 pb-16 md:pb-24 border-t border-white/10 overflow-hidden">
+          {/* Background image */}
+          <img
+            src="/light.png"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover object-top pointer-events-none"
+          />
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.5 }}
-            className="text-center relative z-10"
+            className="text-center relative z-10 flex flex-col items-center"
           >
-            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
-              Ready to Take Your Project to the{' '}
-              <span className="gradient-text">Next Level?</span>
-            </h3>
-          <p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-xl mx-auto mb-8">
-            Let&apos;s discuss how we can help accelerate your project&apos;s growth with our proven marketing strategies.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <motion.button
-              onClick={openBooking}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="btn-primary hoverable text-sm sm:text-base w-full sm:w-auto"
-            >
-              <span className="flex items-center justify-center gap-2">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                  <line x1="16" y1="2" x2="16" y2="6" />
-                  <line x1="8" y1="2" x2="8" y2="6" />
-                  <line x1="3" y1="10" x2="21" y2="10" />
-                </svg>
+            {/* Heading text */}
+            <p className="text-white text-xl sm:text-2xl md:text-3xl font-semibold uppercase tracking-widest mb-6 md:mb-8">
+              Build Your Foundation With
+            </p>
+
+            {/* KRAVEN logo image */}
+            <img
+              src="/KRAVEN.png"
+              alt="KRAVEN"
+              className="max-w-[280px] sm:max-w-[360px] md:max-w-[460px] w-full mb-10 md:mb-14"
+            />
+
+            {/* Glossy glass buttons like Campaign buttons */}
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
+              <motion.button
+                onClick={openBooking}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="hoverable px-5 py-2.5 sm:px-6 sm:py-3 rounded-full border text-sm sm:text-base font-medium transition-all duration-300 backdrop-blur-md border-white/30 bg-gradient-to-b from-white/15 to-white/5 text-white shadow-[0_0_20px_rgba(255,255,255,0.08),inset_0_1px_0_rgba(255,255,255,0.15),0_6px_20px_-4px_rgba(255,255,255,0.15)]"
+              >
                 Book a Call
-              </span>
-            </motion.button>
-            <motion.a
-              href="https://docs.google.com/forms/d/e/1FAIpQLScEhIX2O-DrHi9EOXUbxLbq5CJBHDmyHqqisDlnkXKInqGPlw/viewform"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="btn-outline hoverable text-sm sm:text-base w-full sm:w-auto"
-            >
-              <span className="flex items-center justify-center gap-2">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                  <polyline points="14 2 14 8 20 8" />
-                  <line x1="16" y1="13" x2="8" y2="13" />
-                  <line x1="16" y1="17" x2="8" y2="17" />
-                  <polyline points="10 9 9 9 8 9" />
-                </svg>
+              </motion.button>
+              <motion.a
+                href="https://docs.google.com/forms/d/e/1FAIpQLScEhIX2O-DrHi9EOXUbxLbq5CJBHDmyHqqisDlnkXKInqGPlw/viewform"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="hoverable px-5 py-2.5 sm:px-6 sm:py-3 rounded-full border text-sm sm:text-base font-medium transition-all duration-300 backdrop-blur-md border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.02] text-gray-400 hover:border-white/20 hover:text-white hover:shadow-[0_0_15px_rgba(255,255,255,0.04),inset_0_1px_0_rgba(255,255,255,0.1)] shadow-[0_6px_20px_-4px_rgba(255,255,255,0.1)]"
+              >
                 Submit Form
-              </span>
-            </motion.a>
-          </div>
+              </motion.a>
+            </div>
           </motion.div>
         </div>
       </div>

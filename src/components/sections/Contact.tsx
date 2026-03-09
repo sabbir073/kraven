@@ -40,6 +40,9 @@ export const Contact = () => {
   const [formState, setFormState] = useState({
     name: '',
     email: '',
+    projectName: '',
+    projectLink: '',
+    category: '',
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -69,7 +72,7 @@ export const Contact = () => {
           type: 'success',
           message: 'Message sent successfully! We\'ll get back to you soon.',
         });
-        setFormState({ name: '', email: '', message: '' });
+        setFormState({ name: '', email: '', projectName: '', projectLink: '', category: '', message: '' });
       } else {
         setSubmitStatus({
           type: 'error',
@@ -87,108 +90,196 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="section-padding !pb-4 md:!pb-6 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 grid-bg opacity-20" />
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px]"
-        style={{
-          background:
-            'radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, rgba(6, 182, 212, 0.05) 50%, transparent 70%)',
-          filter: 'blur(100px)',
-        }}
-      />
+    <section id="contact" className="relative overflow-hidden">
+      {/* Full-width background image */}
+      <div className="absolute inset-0">
+        <img
+          src="/contact.png"
+          alt=""
+          className="w-full h-full object-cover object-center pointer-events-none"
+        />
+      </div>
 
-      <div className="container-custom relative z-10" ref={ref}>
-        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
-          {/* Left - Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="text-center lg:text-left"
+      <div className="relative z-10 py-16 sm:py-20 md:py-28" ref={ref}>
+        {/* Title - top center */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-10 md:mb-14"
+        >
+          <h2
+            className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight"
+            style={{
+              background: 'linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.9) 40%, rgba(255,255,255,0.4) 75%, rgba(255,255,255,0) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
           >
-            <motion.span
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ delay: 0.2 }}
-              className="inline-block px-3 py-1.5 sm:px-4 sm:py-2 rounded-full glass text-xs sm:text-sm text-cyan-400 mb-4 sm:mb-6"
-            >
-              Contact Us
-            </motion.span>
+            Get in Touch
+          </h2>
+        </motion.div>
 
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
-              Let&apos;s <span className="gradient-text">Grow</span> Your Project
-            </h2>
-
-            <p className="text-gray-400 text-sm sm:text-base md:text-lg mb-6 sm:mb-10">
-              Ready to take your Web3 project to the next level? Get in touch with our team and discover how Kraven can drive real users, liquidity, and traction.
-            </p>
-
-            {/* Contact methods */}
-            <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-10">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ delay: 0.3 }}
-                className="flex items-center gap-3 sm:gap-4 justify-center lg:justify-start"
-              >
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-purple-500/20 flex items-center justify-center">
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400" fill="none" viewBox="0 0 24 24">
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                    />
-                  </svg>
-                </div>
-                <div className="text-left">
-                  <div className="text-xs sm:text-sm text-gray-400">Email</div>
-                  <a href="mailto:Buisness.Kraven@gmail.com" className="font-medium text-sm sm:text-base hover:text-purple-400 transition-colors">Buisness.Kraven@gmail.com</a>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ delay: 0.4 }}
-                className="flex items-center gap-3 sm:gap-4 justify-center lg:justify-start"
-              >
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-cyan-500/20 flex items-center justify-center">
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" fill="none" viewBox="0 0 24 24">
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
-                </div>
-                <div className="text-left">
-                  <div className="text-xs sm:text-sm text-gray-400">Location</div>
-                  <div className="font-medium text-sm sm:text-base">Global (Remote-first)</div>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Social links */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          {/* Form on left */}
+          <div className="max-w-xl">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.5 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <div className="text-xs sm:text-sm text-gray-400 mb-3 sm:mb-4">Follow us</div>
-              <div className="flex gap-2 sm:gap-3 justify-center lg:justify-start">
+              <form
+                onSubmit={handleSubmit}
+                className="p-6 sm:p-8 md:p-10 rounded-2xl border border-white/20 shadow-[0_0_40px_rgba(255,255,255,0.06),0_0_80px_rgba(255,255,255,0.03)]"
+              >
+                <p className="text-center text-sm sm:text-base mb-6 sm:mb-8" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.5) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                  Fill the form below.
+                </p>
+
+                <div className="space-y-5 sm:space-y-6">
+                  {/* Name */}
+                  <div>
+                    <label className="block text-sm font-medium mb-2" style={{ background: 'linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.7) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                      What is your full name?
+                    </label>
+                    <input
+                      type="text"
+                      value={formState.name}
+                      onChange={(e) => setFormState({ ...formState, name: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg bg-black/80 border border-white/10 focus:border-blue-500/50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all text-sm sm:text-base text-white placeholder-gray-500 hoverable"
+                      placeholder="Name"
+                    />
+                  </div>
+
+                  {/* Email */}
+                  <div>
+                    <label className="block text-sm font-medium mb-2" style={{ background: 'linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.7) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                      What is your email?
+                    </label>
+                    <input
+                      type="email"
+                      value={formState.email}
+                      onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg bg-black/80 border border-white/10 focus:border-blue-500/50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all text-sm sm:text-base text-white placeholder-gray-500 hoverable"
+                      placeholder="example@example.com"
+                    />
+                  </div>
+
+                  {/* Project Name */}
+                  <div>
+                    <label className="block text-sm font-medium mb-2" style={{ background: 'linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.7) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                      What is the project&apos;s name?
+                    </label>
+                    <input
+                      type="text"
+                      value={formState.projectName}
+                      onChange={(e) => setFormState({ ...formState, projectName: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg bg-black/80 border border-white/10 focus:border-blue-500/50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all text-sm sm:text-base text-white placeholder-gray-500 hoverable"
+                      placeholder="Project's Name"
+                    />
+                  </div>
+
+                  {/* Project Link */}
+                  <div>
+                    <label className="block text-sm font-medium mb-2" style={{ background: 'linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.7) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                      Link to your project&apos;s website/socials
+                    </label>
+                    <input
+                      type="text"
+                      value={formState.projectLink}
+                      onChange={(e) => setFormState({ ...formState, projectLink: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg bg-black/80 border border-white/10 focus:border-blue-500/50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all text-sm sm:text-base text-white placeholder-gray-500 hoverable"
+                      placeholder="www.example.xyz"
+                    />
+                  </div>
+
+                  {/* Category */}
+                  <div>
+                    <label className="block text-sm font-medium mb-2" style={{ background: 'linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.7) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                      What is your project&apos;s category?
+                    </label>
+                    <input
+                      type="text"
+                      value={formState.category}
+                      onChange={(e) => setFormState({ ...formState, category: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg bg-black/80 border border-white/10 focus:border-blue-500/50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all text-sm sm:text-base text-white placeholder-gray-500 hoverable"
+                      placeholder="infra, NFT, gamefi, etc."
+                    />
+                  </div>
+
+                  {/* Message */}
+                  <div>
+                    <label className="block text-sm font-medium mb-2" style={{ background: 'linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.7) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                      Describe what your project is building. Share any relevant links & information.
+                    </label>
+                    <textarea
+                      value={formState.message}
+                      onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                      rows={4}
+                      className="w-full px-4 py-3 rounded-lg bg-black/80 border border-white/10 focus:border-blue-500/50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all resize-none text-sm sm:text-base text-white placeholder-gray-500 hoverable"
+                      placeholder="Your message here."
+                    />
+                  </div>
+
+                  {submitStatus.type && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className={`p-3 sm:p-4 rounded-lg text-sm ${
+                        submitStatus.type === 'success'
+                          ? 'bg-green-500/20 border border-green-500/30 text-green-400'
+                          : 'bg-red-500/20 border border-red-500/30 text-red-400'
+                      }`}
+                    >
+                      {submitStatus.message}
+                    </motion.div>
+                  )}
+
+                  {/* Send button */}
+                  <motion.button
+                    type="submit"
+                    whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                    whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+                    disabled={isSubmitting}
+                    className={`w-full py-3 sm:py-3.5 rounded-lg font-medium text-sm sm:text-base transition-all duration-300 backdrop-blur-md bg-gradient-to-r from-blue-600 to-blue-500 text-white hover:from-blue-500 hover:to-blue-400 shadow-[0_0_20px_rgba(60,80,255,0.2)] hoverable flex items-center justify-center gap-2 ${
+                      isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+                    }`}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                            fill="none"
+                          />
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          />
+                        </svg>
+                        Sending...
+                      </>
+                    ) : (
+                      'Send Message'
+                    )}
+                  </motion.button>
+                </div>
+              </form>
+
+              {/* Social links below form */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.5 }}
+                className="flex gap-3 mt-6"
+              >
                 {socialLinks.map((social, i) => (
                   <motion.a
                     key={social.name}
@@ -200,128 +291,35 @@ export const Contact = () => {
                     transition={{ delay: 0.6 + i * 0.1 }}
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.9 }}
-                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl glass glass-hover flex items-center justify-center text-gray-400 hover:text-white transition-colors hoverable"
+                    className="w-10 h-10 sm:w-11 sm:h-11 rounded-full backdrop-blur-md bg-white/10 border border-white/10 hover:border-white/30 flex items-center justify-center text-gray-400 hover:text-white transition-all hoverable"
                   >
                     {social.icon}
                   </motion.a>
                 ))}
-              </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-
-          {/* Right - Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <form onSubmit={handleSubmit} className="p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl glass">
-              <div className="space-y-4 sm:space-y-6">
-                <div>
-                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2">Name</label>
-                  <motion.input
-                    whileFocus={{ scale: 1.01 }}
-                    type="text"
-                    value={formState.name}
-                    onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg sm:rounded-xl bg-white/5 border border-white/10 focus:border-purple-500/50 focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition-all hoverable text-sm sm:text-base"
-                    placeholder="Your name"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2">Email</label>
-                  <motion.input
-                    whileFocus={{ scale: 1.01 }}
-                    type="email"
-                    value={formState.email}
-                    onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg sm:rounded-xl bg-white/5 border border-white/10 focus:border-purple-500/50 focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition-all hoverable text-sm sm:text-base"
-                    placeholder="your@email.com"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2">Message</label>
-                  <motion.textarea
-                    whileFocus={{ scale: 1.01 }}
-                    value={formState.message}
-                    onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                    rows={4}
-                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg sm:rounded-xl bg-white/5 border border-white/10 focus:border-purple-500/50 focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition-all resize-none hoverable text-sm sm:text-base"
-                    placeholder="Tell us about your project..."
-                  />
-                </div>
-
-                {submitStatus.type && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className={`p-3 sm:p-4 rounded-lg sm:rounded-xl text-sm ${
-                      submitStatus.type === 'success'
-                        ? 'bg-green-500/20 border border-green-500/30 text-green-400'
-                        : 'bg-red-500/20 border border-red-500/30 text-red-400'
-                    }`}
-                  >
-                    {submitStatus.message}
-                  </motion.div>
-                )}
-
-                <motion.button
-                  type="submit"
-                  whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-                  whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                  disabled={isSubmitting}
-                  className={`w-full btn-primary hoverable text-sm sm:text-base flex items-center justify-center gap-2 ${
-                    isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
-                  }`}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                          fill="none"
-                        />
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        />
-                      </svg>
-                      Sending...
-                    </>
-                  ) : (
-                    'Send Message'
-                  )}
-                </motion.button>
-              </div>
-            </form>
-          </motion.div>
+          </div>
         </div>
+      </div>
 
-        {/* Footer */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.8 }}
-          className="mt-12 sm:mt-16 md:mt-20 pt-6 border-t border-white/10"
-        >
+      {/* Footer */}
+      <div className="relative z-10 border-t border-white/10 bg-black/60 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 sm:py-6">
           <div className="flex flex-col items-center justify-center gap-3 sm:gap-4 md:flex-row md:justify-between">
             <Image
-              src="/logo/kraven png white.png"
+              src="/KRAVEN-WHITE.png"
               alt="Kraven"
               width={120}
               height={40}
               className="h-8 w-auto sm:h-10"
             />
-            <div className="text-xs text-gray-500 text-center">
-              © 2025 Kraven. All rights reserved.
+            <div className="flex items-center gap-3 text-xs text-gray-500 text-center">
+              <span>© 2025 Kraven. All rights reserved.</span>
+              <span className="text-gray-600">|</span>
+              <span className="flex items-center gap-1.5">
+                <img src="/copyright.png" alt="Avalanche" className="h-3.5 w-auto" />
+                Build on Avalanche
+              </span>
             </div>
             <div className="flex gap-4 sm:gap-6 text-xs text-gray-500">
               <a href="/privacy-policy" className="hover:text-white transition-colors hoverable">
@@ -332,7 +330,7 @@ export const Contact = () => {
               </a>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
