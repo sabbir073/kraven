@@ -53,7 +53,7 @@ export const Team = () => {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section className="relative pt-6 md:pt-10 pb-16 md:pb-24 overflow-hidden bg-[#0a0a0a]">
+    <section id="team" className="relative pt-6 md:pt-10 pb-16 md:pb-24 overflow-hidden bg-[#0a0a0a]">
       {/* Background glow */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px]"

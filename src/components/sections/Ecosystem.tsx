@@ -119,7 +119,7 @@ export const Ecosystem = () => {
   };
 
   return (
-    <section className="relative pt-4 md:pt-8 pb-6 md:pb-10 overflow-hidden bg-[#0a0a0a]">
+    <section id="ecosystem" className="relative pt-4 md:pt-8 pb-6 md:pb-10 overflow-hidden bg-[#0a0a0a]">
       {/* Section Title */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

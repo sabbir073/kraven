@@ -1,16 +1,17 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValueEvent, useScroll } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import gsap from 'gsap';
 
 const navItems = [
   { name: 'Home', href: '#home', isExternal: false },
+  { name: 'Ecosystem', href: '#ecosystem', isExternal: false },
   { name: 'Campaigns', href: '#campaigns', isExternal: false },
-  { name: 'Services', href: '#services', isExternal: false },
-  { name: 'Process', href: '#process', isExternal: false },
+  { name: 'Our service', href: '#services', isExternal: false },
+  { name: 'Team', href: '#team', isExternal: false },
   { name: 'About', href: '#about', isExternal: false },
   { name: 'FAQ', href: '#faq', isExternal: false },
   { name: 'Contact', href: '#contact', isExternal: false },
@@ -19,15 +20,22 @@ const navItems = [
 export const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [isScrolled, setIsScrolled] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const navItemsRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLAnchorElement & HTMLDivElement>(null);
+  const { scrollY } = useScroll();
+
+  // Add background when scrolled
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    setIsScrolled(latest > 50);
+  });
 
   useEffect(() => {
     const handleScroll = () => {
       const sections = navItems.map((item) => item.href.replace('#', ''));
-      for (const section of sections.reverse()) {
+      for (const section of [...sections].reverse()) {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
@@ -98,7 +106,11 @@ export const Navigation = () => {
     <>
       <nav
         ref={navRef}
-        className="absolute top-0 left-0 right-0 z-50 py-6"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
+          isScrolled
+            ? 'py-3 bg-[#0a0a0a]/80 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.5)]'
+            : 'py-6 bg-transparent'
+        }`}
         style={{ opacity: 0 }}
       >
         <div className="container-custom">
@@ -113,7 +125,9 @@ export const Navigation = () => {
                     alt="Kraven"
                     width={120}
                     height={40}
-                    className="h-8 w-auto"
+                    className={`w-auto transition-all duration-300 ${
+                      isScrolled ? 'h-6' : 'h-8'
+                    }`}
                     priority
                   />
                 </div>
